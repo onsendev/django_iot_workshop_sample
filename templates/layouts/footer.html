@@ -1,0 +1,25 @@
+<footer class="fixed-bottom border-top p-4 bg-dark shadow">
+    <div class="float-left d-none d-sm-block ml-3">
+        <span id="timeOnFooter" class="footer__clock mr-3 text-lightgray font-weight-light"></span>
+        <span id="dateOnFooter" class="footer__datetime text-lightgray font-weight-light"></span>
+    </div>
+    <div class="float-right d-none d-sm-block mr-2 mt-4">
+        <span class="text-lightgray mr-2 font-weight-light">Co-development with CodeCamp</span>
+    </div>
+</footer>
+
+<script>
+    window.addEventListener('load', (event) => {
+        (function reDraw() {
+            const now = new Date();
+            let dateTime = now.toLocaleTimeString();
+            if (now.getSeconds() % 2 === 0) {
+                // コロンを1秒間隔で点滅させたいときはこの行のコメントをはずしてください
+                // dateTime = dateTime.replace(':', ' ');
+            }
+            timeOnFooter.innerText = dateTime.substring(0, dateTime.lastIndexOf(':'));
+            dateOnFooter.innerText = now.toLocaleDateString();
+            setTimeout(reDraw, 1000);
+        })();
+    });
+</script>

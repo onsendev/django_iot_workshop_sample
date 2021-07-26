@@ -1,0 +1,192 @@
+{% extends "layouts/default.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block additional_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'stylesheets/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+<main role="main">
+    <div class="row">
+        <div class="col-5">
+            {# 下記1行を変更。熱中症指数に応じたCSSのクラスの名前を出力する #}
+            <div class="{{ latest_wbgt.css_bg_class|default_if_none:"" }} p-3 mb-4 rounded shadow-sm dashboard-item">
+                <div class="text-muted pt-3">
+                    {% with sensor_values|first as latest_sensor_values %}
+                    {# 下記2行を変更。最新のセンサーの値を出力する #}
+                    <span class="sensor-value-primary">{{ latest_sensor_values.temperature }}</span><span class="sensor-value-unit-primary">℃,</span>
+                    <span class="ml-3 sensor-value-primary">{{ latest_sensor_values.humidity }}</span><span class="sensor-value-unit-primary">%</span>
+                    {% endwith %}
+                </div>
+                <div class="media text-muted pb-3">
+                    <p class="">
+                        <span class="ml-1 text-white">
+                            {{ latest_wbgt.description|default_if_none:"-" }}
+                        </span>
+                    </p>
+                </div>
+                
+                <div class="chart-view border-top pt-4 pb-3">
+                    <canvas class="pt-2" id="sensorValuesLineChart" width="500" height="200" style="display: block; box-sizing: border-box; height: 198px; width: 396.5px;">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-7">
+            
+            {# この部分を自分好みの配置、家電の名前に書き換えましょう！ #}
+
+            <div class="p-3 mb-4 bg-translucent-white rounded shadow-sm dashboard-item">
+                <h6 class="border-bottom border-gray pb-2 mb-3">Lighting</h6>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <form action="{% url 'remo:invoke' 'light_on_off' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-secondary btn-lg btn-block">
+                                I/O
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-3 mb-4 bg-translucent-white rounded shadow-sm dashboard-item">
+                <h6 class="border-bottom border-gray pb-2 mb-3">Blue-lay recorder</h6>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-secondary btn-lg btn-block">
+                                I/O
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-secondary btn-lg btn-block">
+                                Play
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-6">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-secondary btn-lg btn-block">
+                                Pause
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            {# ここまで - この部分を自分好みの配置、家電の名前に書き換えましょう！ #}
+
+        </div>
+    </div>
+</main>
+
+{% include 'layouts/footer.html' %}
+
+<script>
+    window.addEventListener('load', (event) => {
+
+        const chart = new Chart(sensorValuesLineChart, {
+            type: 'line',
+            data: {
+                labels: [
+                    {% for sensor_value in sensor_values reversed %}
+                        '{{ sensor_value.created_at|date:"H:i" }}',
+                    {% endfor %}
+                ],
+                datasets: [
+                    {
+                        yAxisID: 'temperature',
+                        label: 'Temperature',
+                        data: [
+                            {% for sensor_value in sensor_values reversed %}
+                                {{ sensor_value.temperature }},
+                            {% endfor %}
+                        ],
+                        fill: false,
+                        cubicInterpolationMode: 'monotone',
+                        borderColor: '#ddf',
+                        tension: 0.5
+                    },
+                    {
+                        yAxisID: 'humidity',
+                        label: 'Humidity',
+                        cubicInterpolationMode: 'monotone',
+                        data: [
+                            {% for sensor_value in sensor_values reversed %} 
+                                {{ sensor_value.humidity }},
+                            {% endfor %}
+                        ],
+                        fill: false,
+                        borderColor: '#d8a',
+                        tension: 0.5
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                legend: {
+                },
+                plugins: {
+                    legend: {
+                        display: false,
+                        labels: {
+                            color: "white",
+                        },
+                    }
+                },
+                elements: {
+                    point:{
+                        radius: 0
+                    }
+                },
+                scales: {
+                    xAxes: {
+                        ticks: {
+                            color: "white",
+                        }
+                    },
+                    temperature: {
+                        type: "linear",
+                        position: "left",
+                        min : 20,
+                        max : 30,    
+                        ticks: {
+                            color: "white",
+                            stepSize: 5,
+                        }
+                    },
+                    humidity: {
+                        type: "linear", 
+                        position: "right",
+                        min : 40,
+                        max : 80,    
+                        grid: {
+                            display: false,
+                        },
+                        ticks: {
+                            color: "white",
+                            stepSize: 10,
+                        }
+                    },
+                }
+            }
+        });
+    });
+</script>
+
+{% endblock %}

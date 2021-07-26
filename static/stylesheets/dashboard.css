@@ -1,0 +1,60 @@
+.dashboard-item {
+    opacity: .7;
+}
+
+.bg-translucent-white {
+    background: rgba(255, 255, 255, 0.75);
+}
+
+.bg-fresh-air {
+    background-image: -webkit-linear-gradient(bottom left, #ced7fe, #ced5fe, #ced4ff, #ced2ff, #ced0ff);
+    background-image: -moz-linear-gradient(bottom left, #ced7fe, #ced5fe, #ced4ff, #ced2ff, #ced0ff);
+    background-image: -o-linear-gradient(bottom left, #ced7fe, #ced5fe, #ced4ff, #ced2ff, #ced0ff);
+    background-image: linear-gradient(to top right, #ced7fe, #ced5fe, #ced4ff, #ced2ff, #ced0ff);
+}
+
+.bg-wbgt-safety {
+    background-image: -webkit-linear-gradient(top right, #8598ff, #7c92f6, #738bed, #6b85e5, #627fdc);
+    background-image: -moz-linear-gradient(top right, #8598ff, #7c92f6, #738bed, #6b85e5, #627fdc);
+    background-image: -o-linear-gradient(top right, #8598ff, #7c92f6, #738bed, #6b85e5, #627fdc);
+    background-image: linear-gradient(to bottom left, #8598ff, #7c92f6, #738bed, #6b85e5, #627fdc);
+}
+
+.bg-wbgt-caution {
+    background-image: -webkit-linear-gradient(bottom left, #a4b146, #b0c04b, #bbcf50, #c7df55, #d2ef5b);
+    background-image: -moz-linear-gradient(bottom left, #a4b146, #b0c04b, #bbcf50, #c7df55, #d2ef5b);
+    background-image: -o-linear-gradient(bottom left, #a4b146, #b0c04b, #bbcf50, #c7df55, #d2ef5b);
+    background-image: linear-gradient(to top right, #a4b146, #b0c04b, #bbcf50, #c7df55, #d2ef5b);
+}
+
+.bg-wbgt-warn {
+    background-image: -webkit-linear-gradient(bottom left, #cd6952, #d77858, #e1875e, #ea9765, #f3a66d);
+    background-image: -moz-linear-gradient(bottom left, #cd6952, #d77858, #e1875e, #ea9765, #f3a66d);
+    background-image: -o-linear-gradient(bottom left, #cd6952, #d77858, #e1875e, #ea9765, #f3a66d);
+    background-image: linear-gradient(to top right, #cd6952, #d77858, #e1875e, #ea9765, #f3a66d);
+}
+
+.bg-wbgt-danger {
+    background-image: -webkit-linear-gradient(bottom left, #ce3f3f, #da4545, #e64a4a, #f35050, #ff5656);
+    background-image: -moz-linear-gradient(bottom left, #ce3f3f, #da4545, #e64a4a, #f35050, #ff5656);
+    background-image: -o-linear-gradient(bottom left, #ce3f3f, #da4545, #e64a4a, #f35050, #ff5656);
+    background-image: linear-gradient(to top right, #ce3f3f, #da4545, #e64a4a, #f35050, #ff5656);
+}
+
+.bg-wbgt-fatal {
+    background-image: -webkit-linear-gradient(bottom left, #74347d, #88398c, #9d3d9a, #b340a8, #ca43b5);
+    background-image: -moz-linear-gradient(bottom left, #74347d, #88398c, #9d3d9a, #b340a8, #ca43b5);
+    background-image: -o-linear-gradient(bottom left, #74347d, #88398c, #9d3d9a, #b340a8, #ca43b5);
+    background-image: linear-gradient(to top right, #74347d, #88398c, #9d3d9a, #b340a8, #ca43b5);
+}
+
+.sensor-value-primary {
+    font-size: 4em;
+    letter-spacing: 0.02em;
+    color: white;
+}
+
+.sensor-value-unit-primary {
+    font-size: 2.5em;
+    color: white;
+}
